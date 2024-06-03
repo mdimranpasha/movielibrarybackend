@@ -34,6 +34,7 @@ const UserLogin = async (req, res) => {
   try {
     const { email, password } = req.body;
     const existUser = await User.findOne({ email });
+    console.log('exist',existUser);
     if (!existUser) {
       return res.status(400).json({ msg: "user not found" });
     }
@@ -45,7 +46,8 @@ const UserLogin = async (req, res) => {
     const jwtToken = jwt.sign(payload, "qwerty", { expiresIn: "1d" });
     res.status(200).json({ msg: "user logged succesfully", jwtToken });
   } catch (error) {
-    console.log("failed to login");
+
+    console.log("error",error);
     res.status(400).json({ msg: "failed to login" });
   }
 };
